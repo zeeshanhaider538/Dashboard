@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "../images/logo/logo.svg";
+import SidebarLinkGroup from "./SidebarLinkGroup";
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation;
   const { pathname } = location;
@@ -10,10 +11,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   //  { ****  to store sidebar expand value in localStorage for a user to get it Later ****}
 
-  // const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
-  // const [sidebarExpanded, setSidebarExpanded] = useState(
-  //   storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
-  // );
+  const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
+  const [sidebarExpanded, setSidebarExpanded] = useState(
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
+  );
   // console.log(sidebarOpen);
 
   //{**** close the sider if we click on the outside of the sidebar *****}
@@ -34,7 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
     return () => document.removeEventListener("click", clickHandler);
   }, [sidebarOpen, trigger, sidebar]);
-  // {*** Clos on pressing the ESC button *****}
+  // {*** Sidebar Close on pressing the ESC button *****}
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
       if (!sidebarOpen || keyCode !== 27) return;
@@ -81,7 +82,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
-      <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear"></div>
+      <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+        {/* Sudebar Menu  */}
+        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+          {/* Menu Group  */}
+          <div>
+            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+              MENU
+            </h3>
+            <ul className="mb-6 flex flex-col gap-1.5">
+              {/* Menu Item Dashboard */}
+              <SidebarLinkGroup activeCondtion={false}>
+                {() => {
+                  return (
+                    <React.Fragment>
+                      <h1>shanu</h1>
+                    </React.Fragment>
+                  );
+                }}
+              </SidebarLinkGroup>
+            </ul>
+          </div>
+        </nav>
+      </div>
     </aside>
   );
 };
